@@ -6,7 +6,6 @@ const fsx = require('fs-extra');
 
 const qoa = require('qoa');
 const chalk = require('chalk');
-let log = console.log;
 
 var compareVersions = require('compare-versions');
 const dlrepo = require('download-git-repo');
@@ -17,15 +16,27 @@ const creds = require('../lib/credentials.js');
 const args = require('yargs')
   .alias('i', 'installer')
   .describe('i', "")
-  .default('i', "bc-ci-for-pantheon")
+  .default('i', "bc-ci-for-pantheon") // @TODO: remove this after development
   .alias('c', 'ci-version')
   .describe('c', "CI version or tag")
-  .default('c', "1.0.0-alpha.1")
+  .default('c', "1.0.0-alpha.1") // @TODO: remove this after development
   .epilog('copyright 2019')
   .help('h')
   .alias('h', 'help')
-  .alias('v', 'version')
+  .alias('V', 'version')
+  .count('verbose')
+  .alias('v', 'verbose')
+  .default('v', 3) // @TODO: remove this after development
+  .describe('verbose', "Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug")
   .argv;
+
+let Logger = require('../lib/logger.js');
+let logger = new Logger(4);
+let log = logger.log;
+
+console.log(args)
+
+return;
 
 var versionPattern = /([0-9]+)(\.([0-9x]+))?(\.([0-9x]+))?(-(([a-z]+)([.-]([0-9]+))?)?)?/;
 
@@ -42,9 +53,6 @@ let config = {
 config.credsDir = config.baseTempDir + "/creds";
 config.credsFile = config.credsDir + '/creds.json';
 config.tmpRepoDir = config.baseTempDir + "/repo";
-
-
-// log(config.creds);
 
 creds.initCreds(config)
   .then((CredsResponse) => {
