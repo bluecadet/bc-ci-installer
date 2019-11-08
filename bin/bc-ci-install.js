@@ -2,11 +2,11 @@
 
 const os = require('os');
 const path = require('path');
-const fs = require('fs');
 const fsx = require('fs-extra');
 
 const qoa = require('qoa');
 const chalk = require('chalk');
+let log = console.log;
 
 var compareVersions = require('compare-versions');
 const dlrepo = require('download-git-repo');
@@ -44,7 +44,7 @@ config.credsFile = config.credsDir + '/creds.json';
 config.tmpRepoDir = config.baseTempDir + "/repo";
 
 
-// console.log(config.creds);
+// log(config.creds);
 
 creds.initCreds(config)
   .then((CredsResponse) => {
@@ -59,14 +59,20 @@ creds.initCreds(config)
 
     // Do IT!!
     let installFile = './lib/installers/' + config.installer + '.js';
-    console.log(installFile);
-    if (fs.existsSync(installFile)) {
-      console.log(chalk.green("Installer (" + config.installer + ") found."));
+    log(installFile);
+    if (fsx.existsSync(installFile)) {
+      log(chalk.green("Installer (" + config.installer + ") found."));
       const installer = require('../lib/installers/' + config.installer + '.js');
       return installer.install(config);
     }
 
-    console.log(chalk.red("Installer (" + config.installer + ") does not exist."));
+    log(chalk.red("Installer (" + config.installer + ") does not exist."));
+    return;
+  })
+  .then((response) => {
+    if (response.status == "user_terminated") {
+      log(chalk.red("User Terminated Installation."))
+    }
   });
 
 
