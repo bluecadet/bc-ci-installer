@@ -1,0 +1,29 @@
+{
+  "name": "@bluecadet/bc-ci-installer",
+  "version": "1.0.0",
+  "description": "",
+  "bugs": {
+    "url": "https://github.com/bluecadet/bc-ci-installer/issues"
+  },
+  "repository": "github:bluecadet/bcnew",
+  "main": "index.js",
+  "bin": {
+    "bc-ci-install": "./bin/bc-ci-install.js",
+    "bc-ci-clear-creds": "./bin/bc-ci-clear-creds.js"
+  },
+  "preferGlobal": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pete Inge",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "compare-versions": "^3.5.1",
+    "download-git-repo": "^2.0.0",
+    "fs-extra": "^8.0.1",
+    "github-api": "^3.3.0",
+    "qoa": "^0.2.0",
+    "yargs": "^13.2.4"
+  }
+}
