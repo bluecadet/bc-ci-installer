@@ -142,10 +142,6 @@ creds.initCreds(config)
 // let versionInfo = args.c.match(versionPattern);
 // console.log(versionInfo);
 
-// let gh = new GitHub({
-//   token: '6fafb27ab2a8f9445e4833306fbe136583483305'
-// });
-
 // let repo = gh.getRepo('bluecadet', 'bc-ci-for-pantheon');
 
 // let githubTags = [];
