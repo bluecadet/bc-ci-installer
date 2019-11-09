@@ -9,7 +9,8 @@
   "main": "index.js",
   "bin": {
     "bc-ci-install": "./bin/bc-ci-install.js",
-    "bc-ci-clear-creds": "./bin/bc-ci-clear-creds.js"
+    "bc-ci-clear-creds": "./bin/bc-ci-clear-creds.js",
+    "bc-ci-test": "./bin/test.js"
   },
   "preferGlobal": true,
   "scripts": {

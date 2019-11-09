@@ -16,7 +16,7 @@ const args = require('yargs')
   .choices('i', ['bc-ci-for-pantheon'])
   .alias('c', 'ci-version')
   .describe('c', "CI version or tag")
-  .default('c', "~1") // @TODO: remove this after development
+  .default('c', "^1.0.0-alpha") // @TODO: remove this after development
   .boolean('t')
   .alias('t', 'incTestConfig')
   .describe('t', "Include Deafult Test Config Files. (This will destroy any changes you may have made in them)")
@@ -38,6 +38,8 @@ let logger = new Logger(args.verbose);
 let log = logger.log;
 
 log(args, 3);
+
+
 
 // Configuration.
 let config = {
@@ -100,17 +102,32 @@ creds.initCreds(config)
         return { status: "installer_not_found" };
       }
 
-      return { status: "unknown module require error" };
+      throw err;
     }
   })
   // Handle Status.
   .then((response) => {
-    if (response.status == "user_terminated") {
+
+    log(response, 2);
+
+    if (response.status && response.status == "success") {
+      log(chalk.green.bold("\n**********\nCONGRATS!! Files installed."));
+    }
+
+  })
+  .catch((error) => {
+    log(error, 2);
+
+    if (error.status && error.status == "user_terminated") {
       log(chalk.red("User Terminated Installation."))
     }
 
-    if (response.status == "installer_not_found") {
+    if (error.status && error.status == "installer_not_found") {
       log(chalk.red("Installer Not Found. Exiting Installation"))
+    }
+
+    if (error.status && error.status == "github_error") {
+      log(chalk.red(error.msg))
     }
   });
 
