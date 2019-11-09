@@ -4,17 +4,9 @@ const os = require('os');
 const path = require('path');
 const fsx = require('fs-extra');
 
-const qoa = require('qoa');
 const chalk = require('chalk');
 
-var compareVersions = require('compare-versions');
-const dlrepo = require('download-git-repo');
-var GitHub = require('github-api');
-
 const creds = require('../lib/credentials.js');
-
-
-const yargs = require('yargs');
 
 const args = require('yargs')
   .usage('Usage: $0 [options]')
@@ -24,7 +16,7 @@ const args = require('yargs')
   .choices('i', ['bc-ci-for-pantheon'])
   .alias('c', 'ci-version')
   .describe('c', "CI version or tag")
-  .default('c', "1.0.0-alpha.1") // @TODO: remove this after development
+  .default('c', "~1") // @TODO: remove this after development
   .boolean('t')
   .alias('t', 'incTestConfig')
   .describe('t', "Include Deafult Test Config Files. (This will destroy any changes you may have made in them)")
@@ -92,7 +84,6 @@ creds.initCreds(config)
 
     // Select project and version.
     // @TODO: remove defaults and actually figure this out.
-
     config.version = args.c;
 
     // Do IT!!
