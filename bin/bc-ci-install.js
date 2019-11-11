@@ -15,8 +15,8 @@ const args = require('yargs')
   .default('i', "bc-ci-for-pantheon") // @TODO: remove this after development
   .choices('i', ['bc-ci-for-pantheon'])
   .alias('c', 'ci-version')
-  .describe('c', "CI version or tag")
-  .default('c', "^1.0.0-alpha") // @TODO: remove this after development
+  .describe('c', "CI version: semver range, or [branch]-latest")
+  .default('c', "1.x.x-latest") // @TODO: remove this after development
   .boolean('t')
   .alias('t', 'incTestConfig')
   .describe('t', "Include Deafult Test Config Files. (This will destroy any changes you may have made in them)")
@@ -38,8 +38,6 @@ let logger = new Logger(args.verbose);
 let log = logger.log;
 
 log(args, 3);
-
-
 
 // Configuration.
 let config = {
@@ -130,103 +128,3 @@ creds.initCreds(config)
       log(chalk.red(error.msg))
     }
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// let e1 = "1.x-latest";
-// let e2 = "1.0.x-latest";
-// let e3 = "1.0.0-beta-3";
-// let e4 = "1.0.0-beta.3";
-// let e5 = "1.0.0-alpha2";
-
-// let r = e1.match(versionPattern);
-// console.log(r);
-
-// r = e2.match(versionPattern);
-// console.log(r);
-
-// r = e3.match(versionPattern);
-// console.log(r);
-
-// r = e4.match(versionPattern);
-// console.log(r);
-
-// r = e5.match(versionPattern);
-// console.log(r);
-
-
-// console.log();
-// console.log(compareVersions('1.0.0-alpha1', '1.0.0-alpha2'));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// let versionInfo = args.c.match(versionPattern);
-// console.log(versionInfo);
-
-// let repo = gh.getRepo('bluecadet', 'bc-ci-for-pantheon');
-
-// let githubTags = [];
-// let tagPromise = repo.listTags().then(function ({ data }) {
-//   // console.log(data);
-//   // data.each()
-//   githubTags = data.map(x => x.name);
-//   // console.log(githubTags);
-// });
-
-// let githubBranches = [];
-// let branchPromise = repo.listBranches().then(function ({ data }) {
-//   // console.log(data);
-//   // githubBranches = data.map(x => x.name);
-//   data.forEach(el => {
-//     if (el.name !== "master") {
-//       githubBranches.push(el.name);
-//     }
-//   });
-//   // console.log(githubBranches);
-// });
-
-
-// Promise.all([tagPromise, branchPromise]).then(function () {
-//   console.log(githubTags, githubBranches, config.tmpRepoDir);
-
-//   // Lets grab the repo.
-//   dlrepo('bluecadet/bc-ci-for-pantheon#' + args.c, config.tmpRepoDir, { clone: true }, err => {
-//     if (err) {
-//       console.log(chalk.red(`ERROR @ downloading repo`));
-//       throw Error(err);
-//     }
-
-
-//     fsx.remove(config.tmpRepoDir, function () {
-//       console.log("Directory removed");
-//     });
-//   });
-
-// });
-
-
